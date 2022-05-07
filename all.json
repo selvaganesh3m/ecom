@@ -1,0 +1,603 @@
+[
+{
+    "model": "customers.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$PhhYkp2BgdD5HNWJUGKZP3$Cg9etOd3KSTy5ZkAYKT/vnSluOo7hl3GXxbwjnJWJoI=",
+        "last_login": "2022-04-30T04:51:03.048Z",
+        "is_superuser": true,
+        "username": "selvaganesh",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2022-04-29T05:18:04.364Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 1,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 2,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 3,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 4,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 5,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 6,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 7,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 8,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 9,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 10,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 11,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 21,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 22,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 23,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 24,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 25,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 26,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 27,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 28,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 29,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 30,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 31,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 32,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 33,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 34,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cart",
+    "pk": 35,
+    "fields": {
+        "user": null,
+        "shipping_address": null,
+        "billing_address": null
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 1,
+    "fields": {
+        "cart": 1,
+        "product": 1,
+        "quantity": 1
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 2,
+    "fields": {
+        "cart": 1,
+        "product": 3,
+        "quantity": 1
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 3,
+    "fields": {
+        "cart": 2,
+        "product": 1,
+        "quantity": 1
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 4,
+    "fields": {
+        "cart": 24,
+        "product": 3,
+        "quantity": 2
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 5,
+    "fields": {
+        "cart": 25,
+        "product": 1,
+        "quantity": 2
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 6,
+    "fields": {
+        "cart": 26,
+        "product": 2,
+        "quantity": 1
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 7,
+    "fields": {
+        "cart": 24,
+        "product": 2,
+        "quantity": 3
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 8,
+    "fields": {
+        "cart": 25,
+        "product": 3,
+        "quantity": 2
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 9,
+    "fields": {
+        "cart": 27,
+        "product": 4,
+        "quantity": 2
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 10,
+    "fields": {
+        "cart": 28,
+        "product": 4,
+        "quantity": 1
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 12,
+    "fields": {
+        "cart": 29,
+        "product": 4,
+        "quantity": 1
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 13,
+    "fields": {
+        "cart": 29,
+        "product": 3,
+        "quantity": 3
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 14,
+    "fields": {
+        "cart": 31,
+        "product": 2,
+        "quantity": 1
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 15,
+    "fields": {
+        "cart": 32,
+        "product": 2,
+        "quantity": 3
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 16,
+    "fields": {
+        "cart": 32,
+        "product": 1,
+        "quantity": 2
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 17,
+    "fields": {
+        "cart": 33,
+        "product": 1,
+        "quantity": 2
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 18,
+    "fields": {
+        "cart": 33,
+        "product": 2,
+        "quantity": 3
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 19,
+    "fields": {
+        "cart": 33,
+        "product": 3,
+        "quantity": 2
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 20,
+    "fields": {
+        "cart": 34,
+        "product": 1,
+        "quantity": 1
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 21,
+    "fields": {
+        "cart": 35,
+        "product": 1,
+        "quantity": 1
+    }
+},
+{
+    "model": "cart.cartitem",
+    "pk": 27,
+    "fields": {
+        "cart": 35,
+        "product": 4,
+        "quantity": 2
+    }
+},
+{
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+        "name": "Plant",
+        "slug": "plant"
+    }
+},
+{
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+        "name": "Flowers",
+        "slug": "flowers"
+    }
+},
+{
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+        "name": "Leaves",
+        "slug": "leaves"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "title": "Easter Lily",
+        "slug": "easter-lily",
+        "description": "Refresh your space with a fresh blooming Easter Lily in a basket.",
+        "category": 1,
+        "price": "85.00",
+        "discount": null,
+        "sku": "EASTL",
+        "stock": 12,
+        "in_stock": true,
+        "is_active": true
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "title": "Spring Garden",
+        "slug": "spring-garden",
+        "description": "Mixed basket of flowering, spring plants. Seasonal plants, mixture will vary.",
+        "category": 1,
+        "price": "85.00",
+        "discount": null,
+        "sku": "PL11",
+        "stock": 6,
+        "in_stock": true,
+        "is_active": true
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "title": "Victoria",
+        "slug": "victoria",
+        "description": "Variety of seasonal flowers",
+        "category": 2,
+        "price": "175.00",
+        "discount": null,
+        "sku": "CF35",
+        "stock": 5,
+        "in_stock": true,
+        "is_active": true
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "title": "Martha",
+        "slug": "martha",
+        "description": "A soft and colorful mixed spring arrangement designed in a novelty, watering can container",
+        "category": 2,
+        "price": "90.00",
+        "discount": null,
+        "sku": "CWF22",
+        "stock": 9,
+        "in_stock": true,
+        "is_active": true
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 1,
+    "fields": {
+        "product": 4,
+        "image": "images/martha1.png",
+        "is_featured": false
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 2,
+    "fields": {
+        "product": 4,
+        "image": "images/martha2.png",
+        "is_featured": true
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 3,
+    "fields": {
+        "product": 3,
+        "image": "images/Victoria1.png",
+        "is_featured": true
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 4,
+    "fields": {
+        "product": 3,
+        "image": "images/victoria2.png",
+        "is_featured": false
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 5,
+    "fields": {
+        "product": 2,
+        "image": "images/spring_garden.jpg",
+        "is_featured": true
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 6,
+    "fields": {
+        "product": 2,
+        "image": "images/spring_garden2.jpeg",
+        "is_featured": false
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 7,
+    "fields": {
+        "product": 1,
+        "image": "images/easter_lily1.webp",
+        "is_featured": false
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 8,
+    "fields": {
+        "product": 1,
+        "image": "images/easter_lily2.webp",
+        "is_featured": true
+    }
+}
+]

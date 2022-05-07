@@ -1,0 +1,19 @@
+[
+{
+    "model": "customers.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$PhhYkp2BgdD5HNWJUGKZP3$Cg9etOd3KSTy5ZkAYKT/vnSluOo7hl3GXxbwjnJWJoI=",
+        "last_login": null,
+        "is_superuser": true,
+        "eamil": "selvaganesh3m@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2022-04-29T05:18:04.364Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
