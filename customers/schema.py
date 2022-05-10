@@ -2,6 +2,7 @@ import graphene
 
 from django.contrib.auth import get_user_model
 from graphene_django import DjangoObjectType
+from graphql import GraphQLError
 from graphql_jwt.decorators import login_required
 
 
@@ -16,6 +17,7 @@ class UserQuery(graphene.ObjectType):
     # Users List
     users = graphene.List(UserType)
 
+    @login_required
     def resolve_user(self, info, id):
         return get_user_model().objects.get(pk=id)
 

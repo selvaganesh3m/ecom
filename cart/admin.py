@@ -13,6 +13,7 @@ class CartAdmin(admin.ModelAdmin):
     inlines = [
         CartItemInline,
     ]
+    list_display = ('id', 'user')
 
 
 admin.site.register(Cart, CartAdmin)

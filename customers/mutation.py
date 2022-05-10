@@ -7,7 +7,9 @@ from customers.models import User
 from django.core.cache import cache
 import math
 import random
-from graphql_jwt.shortcuts import get_token, get_user_by_token
+from graphql_jwt.shortcuts import get_token
+
+from customers.utils import generate_jti
 
 
 class UserSignUp(graphene.Mutation):
@@ -76,11 +78,16 @@ class UserOTP(graphene.Mutation):
 
 
 class UserLogOut(graphene.Mutation):
+    id = graphene.ID()
     message = graphene.String()
 
     def mutate(self, info):
-        print(info.context.user)
-        return UserLogOut(message="Logged Out Successfully.")
+        if info.context.user.is_authenticated:
+            user = info.context.user
+            user.jti = generate_jti()
+            user.save()
+            return UserLogOut(id=user.id, message="Logged Out Successfully.")
+        return UserLogOut(message="User is Not Logged In")
 
 
 class UserMutation(graphene.ObjectType):

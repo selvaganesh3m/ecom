@@ -15,21 +15,44 @@ class AddToCartMutation(graphene.Mutation):
     cart = graphene.Field(CartType)
 
     def mutate(self, info, cart_id=None, product_id=None, quantity=None):
-        cart, cart_created = Cart.objects.get_or_create(id=cart_id)
-        product = Product.objects.get(pk=product_id)
+        user = info.context.user
+        if user.is_authenticated:
+            try:
+                cart = Cart.objects.get(user=user)
+            except Cart.DoesNotExist:
+                cart = Cart.objects.create(user=user)
+            # end-except
+        else:
+            try:
+                cart = Cart.objects.get(pk=cart_id)
+            except Cart.DoesNotExist:
+                cart = Cart.objects.create()
+            # end-except
+        # endif
         try:
-            cart_item_cart = CartItem.objects.get(cart=cart, product=product)
-            cart_item_cart.quantity += 1
+            product = Product.objects.get(pk=product_id)
+        except Product.DoesNotExist:
+            raise GraphQLError("Product Does not Exist.")
+        # end-except
+
+        try:
+            try:
+                cart_item = CartItem.objects.get(cart=cart, product=product)
+            except CartItem.MultipleObjectsReturned:
+                cart_item = CartItem.objects.filter(cart=cart, product=product).first()
+            # end-except
+            cart_item.quantity += 1
             if quantity == 0:
-                cart_item_cart.quantity = 1
+                cart_item.quantity = 1
             if quantity:
-                cart_item_cart.quantity = quantity
-            cart_item_cart.save()
+                cart_item.quantity = quantity
+            cart_item.save()
         except CartItem.DoesNotExist:
             CartItem.objects.create(
                 cart=cart,
                 product=product,
             )
+        # end-except
         return AddToCartMutation(cart=cart)
 
 

@@ -1,3 +1,6 @@
+import binascii
+import os
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.conf import settings
@@ -5,6 +8,12 @@ from django.conf import settings
 
 # 2 Models
 # User, UserAddress
+# from customers.utils import generate_jti
+
+
+# def generate_jti():
+#     return binascii.hexlify(os.urandom(32)).decode()
+from customers.utils import generate_jti
 
 
 class CustomUserManager(BaseUserManager):
@@ -36,6 +45,7 @@ class CustomUserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
+    jti = models.CharField(max_length=64, editable=False, default=generate_jti())
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
