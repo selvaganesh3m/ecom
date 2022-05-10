@@ -71,6 +71,64 @@ class RemoveFromCartMutation(graphene.Mutation):
         return RemoveFromCartMutation(cart=cart)
 
 
+class CartAttachmentMutation(graphene.Mutation):
+    """
+    This Mutation will be associate the Anonymous user cart to Authenticated user
+    """
+    class Arguments:
+        cart_id = graphene.ID()
+
+    # returns logged in user
+    cart = graphene.Field(CartType)
+
+    def mutate(self, info, cart_id):
+        user = info.context.user
+        if user.is_authenticated:
+            try:
+                user_cart = Cart.objects.get(user=user)
+                try:
+                    cart = Cart.objects.get(pk=cart_id)
+                    cart_items = CartItem.objects.filter(cart=cart)
+                    user_cart_items = CartItem.objects.filter(cart=user_cart)
+                    for cart_item in cart_items:
+                        for user_cart_item in user_cart_items:
+                            if cart_item.product.id == user_cart_item.product.id:
+                                quantity = cart_item.quantity + user_cart_item.quantity
+                                cart_item.quantity = quantity
+                                cart_item.save()
+                                user_cart_item.delete()
+                            cart_item.cart = user_cart
+                            cart_item.save()
+                    return CartAttachmentMutation(cart=user_cart)
+                except Cart.DoesNotExist:
+                    raise GraphQLError("Cart Doesn't exist")
+                # end-except
+            except Cart.DoesNotExist:
+                try:
+                    cart = Cart.objects.get(pk=cart_id)
+                    cart.user = user
+                    cart.save()
+                    return CartAttachmentMutation(cart=cart)
+                except Cart.DoesNotExist:
+                    raise GraphQLError("Cart Doesn't exist")
+                # end-except
+            # end-except
+
+
+
+
+        
+
+
+
+
+
+
+
+
 class CartMutation(graphene.ObjectType):
     add_to_cart = AddToCartMutation.Field()
     remove_from_cart = RemoveFromCartMutation.Field()
+
+    # attaches the cart with the user
+    cart_attachment = CartAttachmentMutation.Field()

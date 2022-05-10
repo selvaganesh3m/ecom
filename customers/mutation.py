@@ -52,6 +52,7 @@ class UserLoginEmail(graphene.Mutation):
             )
             if response:
                 cache.set(user.email, otp, 300)
+                print(otp)
                 return UserLoginEmail(message="OTP has been sent to your mail.")
                 # endif
             return UserLoginEmail(message="Unable to send OTP, Please try after sometime.")
