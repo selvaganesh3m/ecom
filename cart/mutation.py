@@ -64,17 +64,47 @@ class RemoveFromCartMutation(graphene.Mutation):
     cart = graphene.Field(CartType)
 
     def mutate(self, info, cart_id=None, product_id=None):
-        cart = Cart.objects.get(id=cart_id)
-        product = Product.objects.get(id=product_id)
-        cart_item = CartItem.objects.get(cart=cart, product=product)
-        cart_item.delete()
-        return RemoveFromCartMutation(cart=cart)
+        user = info.context.user
+        if user.is_authenticated:
+            try:
+                cart = Cart.objects.get(user=user)
+                try:
+                    product = Product.objects.get(id=product_id)
+                    try:
+                        cart_item = CartItem.objects.get(cart=cart, product=product)
+                    except CartItem.MultipleObjectsReturned:
+                        cart_item = CartItem.objects.filter(cart=cart, product=product).first()
+                    except CartItem.DoesNotExist:
+                        raise GraphQLError("Product is not in the cart")
+                    cart_item.delete()
+                    return RemoveFromCartMutation(cart=cart)
+                except Product.DoesNotExist:
+                    raise GraphQLError("Product is not in your cart to remove")
+            except Cart.DoesNotExist:
+                raise GraphQLError('User has no Cart')
+        try:
+            cart = Cart.objects.get(id=cart_id)
+            try:
+                product = Product.objects.get(id=product_id)
+                try:
+                    cart_item = CartItem.objects.get(cart=cart, product=product)
+                except CartItem.MultipleObjectsReturned:
+                    cart_item = CartItem.objects.filter(cart=cart, product=product).first()
+                except CartItem.DoesNotExist:
+                    raise GraphQLError("Product is not in the cart")
+                cart_item.delete()
+                return RemoveFromCartMutation(cart=cart)
+            except Product.DoesNotExist:
+                raise GraphQLError("Product is not in your cart to remove")
+        except Cart.DoesNotExist:
+            raise GraphQLError("Cart unavailable")
 
 
 class CartAttachmentMutation(graphene.Mutation):
     """
     This Mutation will be associate the Anonymous user cart to Authenticated user
     """
+
     class Arguments:
         cart_id = graphene.ID()
 
@@ -113,17 +143,6 @@ class CartAttachmentMutation(graphene.Mutation):
                     raise GraphQLError("Cart Doesn't exist")
                 # end-except
             # end-except
-
-
-
-
-        
-
-
-
-
-
-
 
 
 class CartMutation(graphene.ObjectType):
