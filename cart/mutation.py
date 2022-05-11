@@ -120,15 +120,23 @@ class CartAttachmentMutation(graphene.Mutation):
                     cart = Cart.objects.get(pk=cart_id)
                     cart_items = CartItem.objects.filter(cart=cart)
                     user_cart_items = CartItem.objects.filter(cart=user_cart)
+                    same_products = []
+                    c_items = []
                     for cart_item in cart_items:
                         for user_cart_item in user_cart_items:
                             if cart_item.product.id == user_cart_item.product.id:
                                 quantity = cart_item.quantity + user_cart_item.quantity
-                                cart_item.quantity = quantity
-                                cart_item.save()
+                                same_products.append((cart_item, quantity))
                                 user_cart_item.delete()
-                            cart_item.cart = user_cart
-                            cart_item.save()
+                            c_items.append(cart_item)
+                    for c_item in c_items:
+                        c_item.cart = user_cart
+                    CartItem.objects.bulk_update(c_items, ['cart'])
+                    cart_it = []
+                    for same_product in same_products:
+                        same_product[0].quantity = same_product[1]
+                        cart_it.append(same_product[0])
+                    CartItem.objects.bulk_update(cart_it, ['quantity'])
                     return CartAttachmentMutation(cart=user_cart)
                 except Cart.DoesNotExist:
                     raise GraphQLError("Cart Doesn't exist")
@@ -143,10 +151,6 @@ class CartAttachmentMutation(graphene.Mutation):
                     raise GraphQLError("Cart Doesn't exist")
                 # end-except
             # end-except
-
-
-class NewClass():
-    pass
 
 
 class CartMutation(graphene.ObjectType):
