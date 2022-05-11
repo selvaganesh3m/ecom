@@ -145,6 +145,10 @@ class CartAttachmentMutation(graphene.Mutation):
             # end-except
 
 
+class NewClass():
+    pass
+
+
 class CartMutation(graphene.ObjectType):
     add_to_cart = AddToCartMutation.Field()
     remove_from_cart = RemoveFromCartMutation.Field()

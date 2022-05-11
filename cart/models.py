@@ -9,7 +9,8 @@ from django.conf import settings
 
 
 class Cart(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                                null=True, blank=True)
     shipping_address = models.ForeignKey(UserAddress,
                                          on_delete=models.CASCADE,
                                          related_name='cart_shipping_address',
