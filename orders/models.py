@@ -20,8 +20,7 @@ STATUS_CHOICES = (
 
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    discount = models.PositiveSmallIntegerField()  # in percentage validation
-    tax = models.DecimalField(max_digits=6, decimal_places=2)
+    discount = models.PositiveSmallIntegerField(default=0)  # in percentage validation
     shipping_address = models.ForeignKey(UserAddress,
                                          on_delete=models.CASCADE,
                                          related_name='order_shipping_address')

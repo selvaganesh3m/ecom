@@ -9,6 +9,7 @@ from customers.schema import UserQuery
 from customers.mutation import UserMutation
 from graphql_jwt.refresh_token import mutations
 from orders.schema import OrderQuery
+from orders.mutation import OrderMutation
 
 
 class AuthMutation(graphene.ObjectType):
@@ -21,7 +22,7 @@ class Query(Query, UserQuery, CartQuery, OrderQuery, graphene.ObjectType):
     pass
 
 
-class Mutation(AuthMutation, UserMutation, Mutation, CartMutation, graphene.ObjectType):
+class Mutation(AuthMutation, UserMutation, Mutation, CartMutation, OrderMutation, graphene.ObjectType):
     pass
 
 

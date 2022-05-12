@@ -57,7 +57,7 @@ class User(AbstractUser):
 
 
 class UserAddress(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     phone = models.CharField(max_length=10, unique=True)

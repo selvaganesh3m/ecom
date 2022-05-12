@@ -4,11 +4,17 @@ from django.contrib.auth import get_user_model
 from graphene_django import DjangoObjectType
 from graphql import GraphQLError
 from graphql_jwt.decorators import login_required
+from .models import UserAddress
 
 
 class UserType(DjangoObjectType):
     class Meta:
         model = get_user_model()
+
+
+class UserAddressType(DjangoObjectType):
+    class Meta:
+        model = UserAddress
 
 
 class UserQuery(graphene.ObjectType):
