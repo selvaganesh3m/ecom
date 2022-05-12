@@ -28,7 +28,7 @@ class Order(models.Model):
     billing_address = models.ForeignKey(UserAddress,
                                         on_delete=models.CASCADE,
                                         related_name='order_billing_address')
-    status = models.CharField(max_length=120, choices=STATUS_CHOICES, default='Started')
+    status = models.CharField(max_length=120, choices=STATUS_CHOICES, default='PAYMENT_PENDING')
     total = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __str__(self):
