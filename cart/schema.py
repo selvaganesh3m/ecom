@@ -16,16 +16,17 @@ class CartItemType(DjangoObjectType):
 
 
 class CartQuery(object):
-    get_my_cart = graphene.List(CartType, id=graphene.ID(required=False), user_id=graphene.ID(required=False))
+    get_my_cart = graphene.List(CartType, id=graphene.ID(required=False))
 
     def resolve_get_my_cart(self, info, **kwargs):
+        user = info.context.user
         if id := kwargs.get('id'):
             cart = Cart.objects.filter(id=id)
-            if len(cart) == 0:
+            if not cart.count():
                 return None
             return cart
-        if user_id := kwargs.get('user_id'):
-            cart = Cart.objects.filter(user__id=user_id)
-            if len(cart) == 0:
-                return None
-            return cart
+        if user.is_authenticated:
+            cart = Cart.objects.filter(user=user)
+            if cart.count():
+                return cart
+            return None

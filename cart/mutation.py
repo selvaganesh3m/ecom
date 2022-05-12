@@ -1,6 +1,8 @@
 import graphene
 from graphql import GraphQLError
 
+from customers.models import UserAddress
+from customers.schema import UserAddressType
 from .schema import CartType
 from .models import Cart, CartItem
 from products.models import Product
@@ -153,9 +155,42 @@ class CartAttachmentMutation(graphene.Mutation):
             # end-except
 
 
+class ChooseDeliveryAddressMutation(graphene.Mutation):
+    class Arguments:
+        shipping_addr_id = graphene.ID()
+        billing_addr_id = graphene.ID()
+
+    cart = graphene.Field(CartType)
+
+    def mutate(self, info, billing_addr_id, shipping_addr_id):
+        user = info.context.user
+        if user.is_authenticated:
+            try:
+                cart = Cart.objects.get(user=user)
+                try:
+                    billing_address = UserAddress.objects.get(id=billing_addr_id)
+                    cart.billing_address = billing_address
+                    cart.save()
+                except UserAddress.DoesNotExist:
+                    raise GraphQLError("UserAddress Does not Exist.")
+                try:
+                    shipping_address = UserAddress.objects.get(id=shipping_addr_id)
+                    cart.shipping_address = shipping_address
+                    cart.save()
+                except UserAddress.DoesNotExist:
+                    raise GraphQLError("UserAddress Does not Exist.")
+                return ChooseDeliveryAddressMutation(cart=cart)
+            except Cart.DoesNotExist:
+                raise GraphQLError("User Has No cart")
+        raise GraphQLError("Please Login")
+
+
 class CartMutation(graphene.ObjectType):
     add_to_cart = AddToCartMutation.Field()
     remove_from_cart = RemoveFromCartMutation.Field()
 
     # attaches the cart with the user
     cart_attachment = CartAttachmentMutation.Field()
+
+    # choose delivery address mutation
+    choose_delivery_address = ChooseDeliveryAddressMutation.Field()
