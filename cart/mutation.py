@@ -1,7 +1,7 @@
 import graphene
 from graphql import GraphQLError
 
-from customers.models import UserAddress
+from customers.models import UserAddress, User
 from customers.schema import UserAddressType
 from .schema import CartType
 from .models import Cart, CartItem
@@ -116,12 +116,22 @@ class CartAttachmentMutation(graphene.Mutation):
     def mutate(self, info, cart_id):
         user = info.context.user
         if user.is_authenticated:
+            # try:
+            #     user_cart = user.cart
+            #     try:
+            #         cart = Cart.objects.get(pk=cart_id)
+            #         cart_items = user_cart.cart_items.all()
+            #         user_cart_items = user_cart.cart_items.all()
+            #     except Cart.DoesNotExist:
+            #         raise GraphQLError("Cart does not exist.")
+            # except Cart.DoesNotExist:
+            #     raise GraphQLError("User has no cart.")
             try:
-                user_cart = Cart.objects.get(user=user)
+                user_cart = user.cart
                 try:
                     cart = Cart.objects.get(pk=cart_id)
-                    cart_items = CartItem.objects.filter(cart=cart)
-                    user_cart_items = CartItem.objects.filter(cart=user_cart)
+                    cart_items = cart.cart_items.all()
+                    user_cart_items = user_cart.cart_items.all()
                     same_products = []
                     c_items = []
                     for cart_item in cart_items:
@@ -153,6 +163,7 @@ class CartAttachmentMutation(graphene.Mutation):
                     raise GraphQLError("Cart Doesn't exist")
                 # end-except
             # end-except
+
 
 
 class ChooseDeliveryAddressMutation(graphene.Mutation):

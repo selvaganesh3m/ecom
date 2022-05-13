@@ -34,10 +34,7 @@ class CreateOrderMutation(graphene.Mutation):
                         quantity=cart_item.quantity,
                         price=cart_item.product.price
                     )
-                cart_items.delete()
-                cart.shipping_address = None
-                cart.billing_address = None
-                cart.save()
+                cart.delete()
                 return CreateOrderMutation(order=order)
             except Cart.DoesNotExist:
                 raise GraphQLError("User has No Active Order.")
