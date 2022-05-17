@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-w@8bgq@$9(a9@)f3tshylhpgr@25vhh^jiq#5!*g&!y3c+6^^+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-password = 's3lvaganesh'
+password = 'bbVDQaFLZH8tQd'
 
 LANGUAGE_CODE = 'en-us'
 
@@ -151,5 +151,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
 
-EMAIL_HOST_USER = 'selvaganesh3m@gmail.com'
+EMAIL_HOST_USER = 'socialmediaadvertisements2022@gmail.com'
 EMAIL_HOST_PASSWORD = password
+
+
+RAZORPAY_KEY_ID = "rzp_test_a8rJ4iAeBdSipr"
+RAZORPAY_KEY_SECRET = "vpMAS7AZGr2BMURkScCC0svv"

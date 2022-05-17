@@ -10,7 +10,7 @@ from customers.mutation import UserMutation
 from graphql_jwt.refresh_token import mutations
 from orders.schema import OrderQuery
 from orders.mutation import OrderMutation
-
+from payment.schema import PaymentQuery
 
 class AuthMutation(graphene.ObjectType):
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()
@@ -18,7 +18,7 @@ class AuthMutation(graphene.ObjectType):
     refresh_token = graphql_jwt.Refresh.Field()
 
 
-class Query(Query, UserQuery, CartQuery, OrderQuery, graphene.ObjectType):
+class Query(Query, UserQuery, CartQuery, OrderQuery, PaymentQuery,graphene.ObjectType):
     pass
 
 

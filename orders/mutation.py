@@ -1,13 +1,20 @@
 import graphene
+import razorpay
+from django.conf import settings
 from graphql import GraphQLError
-
+import math
 from cart.models import Cart
 from .schema import OrderType
+from payment.schema import PaymentType
 from .models import Order, OrderItem
+from payment.models import Payment
+
+client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
 
 class CreateOrderMutation(graphene.Mutation):
     order = graphene.Field(OrderType)
+    payment = graphene.Field(PaymentType)
 
     def mutate(self, info):
         user = info.context.user
@@ -35,7 +42,18 @@ class CreateOrderMutation(graphene.Mutation):
                         price=cart_item.product.price
                     )
                 cart.delete()
-                return CreateOrderMutation(order=order)
+                order_payment = client.order.create(dict(
+                    currency='INR',
+                    amount=int(round(math.ceil(order.total))),
+                    payment_capture='1'
+                ))
+                payment = Payment.objects.create(
+                    order=order,
+                    user=user,
+                    razorpay_order_id=order_payment['id']
+                )
+                print(order_payment)
+                return CreateOrderMutation(order=order, payment=payment)
             except Cart.DoesNotExist:
                 raise GraphQLError("User has No Active Order.")
         raise GraphQLError("Please Login")
@@ -43,4 +61,3 @@ class CreateOrderMutation(graphene.Mutation):
 
 class OrderMutation(graphene.ObjectType):
     create_order = CreateOrderMutation.Field()
-
