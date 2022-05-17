@@ -17,6 +17,14 @@ STATUS_CHOICES = (
     ('REFUND', 'Refund'),
 )
 
+PAYMENT_STATUS_CHOICES = (
+    ('PAYMENT_PENDING', 'Payment Pending'),
+    ('PROCESSING', 'Processing'),
+    ('SUCCESS', 'Success'),
+    ('REFUND', 'Refund'),
+    ('FAILED', 'Failed'),
+)
+
 
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -29,6 +37,8 @@ class Order(models.Model):
                                         related_name='order_billing_address')
     status = models.CharField(max_length=120, choices=STATUS_CHOICES, default='PAYMENT_PENDING')
     total = models.DecimalField(max_digits=6, decimal_places=2)
+    payment_status = models.CharField(max_length=120, choices=PAYMENT_STATUS_CHOICES, default='PAYMENT_PENDING')
+
 
     def __str__(self):
         return f'Order ID {self.id}'
