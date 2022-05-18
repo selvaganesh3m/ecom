@@ -101,7 +101,7 @@ class RemoveFromCartMutation(graphene.Mutation):
         except Cart.DoesNotExist:
             raise GraphQLError("Cart unavailable")
 
-
+from django.db import connection
 class CartAttachmentMutation(graphene.Mutation):
     """
     This Mutation will be associate the Anonymous user cart to Authenticated user
@@ -117,9 +117,9 @@ class CartAttachmentMutation(graphene.Mutation):
         user = info.context.user
         if user.is_authenticated:
             try:
-                user_cart = Cart.objects.select_related().get(user=user)
+                user_cart = Cart.objects.prefetch_related('cart_items').get(user=user)
                 try:
-                    cart = Cart.objects.select_related().get(id=cart_id)
+                    cart = Cart.objects.prefetch_related('cart_items').get(id=cart_id)
                     cart_items = cart.cart_items.all()
                     user_cart_items = user_cart.cart_items.all()
                     same_products = []
