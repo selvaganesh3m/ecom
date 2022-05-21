@@ -45,5 +45,22 @@ class ApplyCoupon(graphene.Mutation):
                 raise GraphQLError('Coupon Invalid')
 
 
+class RemoveCoupon(graphene.Mutation):
+    cart = graphene.Field(CartType)
+
+    def mutate(self, info):
+        user = info.context.user
+        if user.is_authenticated:
+            try:
+                cart = Cart.objects.get(user=user)
+                cart.coupon_applied = False
+                cart.grand_total = calculate_grand_total(cart)
+                cart.save()
+                return RemoveCoupon(cart=cart)
+            except Cart.DoesNotExist:
+                raise GraphQLError('Cart Does not exist')
+
+
 class CouponMutation(graphene.ObjectType):
     apply_coupon = ApplyCoupon.Field()
+    remove_coupon = RemoveCoupon.Field()
