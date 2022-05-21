@@ -6,6 +6,8 @@ from customers.schema import UserAddressType
 from .schema import CartType
 from .models import Cart, CartItem
 from products.models import Product
+from .utils import calculate_grand_total
+
 
 
 class AddToCartMutation(graphene.Mutation):
@@ -21,6 +23,8 @@ class AddToCartMutation(graphene.Mutation):
         if user.is_authenticated:
             try:
                 cart = Cart.objects.get(user=user)
+                cart.grand_total = calculate_grand_total(cart)
+                cart.save()
             except Cart.DoesNotExist:
                 cart = Cart.objects.create(user=user)
             # end-except
@@ -55,6 +59,9 @@ class AddToCartMutation(graphene.Mutation):
                 product=product,
             )
         # end-except
+        cart.grand_total = calculate_grand_total(cart)
+        cart.coupon_applied = False
+        cart.save()
         return AddToCartMutation(cart=cart)
 
 
@@ -79,6 +86,9 @@ class RemoveFromCartMutation(graphene.Mutation):
                     except CartItem.DoesNotExist:
                         raise GraphQLError("Product is not in the cart")
                     cart_item.delete()
+                    cart.grand_total = calculate_grand_total(cart)
+                    cart.coupon_applied = False
+                    cart.save()
                     return RemoveFromCartMutation(cart=cart)
                 except Product.DoesNotExist:
                     raise GraphQLError("Product is not in your cart to remove")
@@ -101,7 +111,7 @@ class RemoveFromCartMutation(graphene.Mutation):
         except Cart.DoesNotExist:
             raise GraphQLError("Cart unavailable")
 
-from django.db import connection
+
 class CartAttachmentMutation(graphene.Mutation):
     """
     This Mutation will be associate the Anonymous user cart to Authenticated user
@@ -117,9 +127,9 @@ class CartAttachmentMutation(graphene.Mutation):
         user = info.context.user
         if user.is_authenticated:
             try:
-                user_cart = Cart.objects.prefetch_related('cart_items').get(user=user)
+                user_cart = Cart.objects.get(user=user)
                 try:
-                    cart = Cart.objects.prefetch_related('cart_items').get(id=cart_id)
+                    cart = Cart.objects.get(id=cart_id)
                     cart_items = cart.cart_items.all()
                     user_cart_items = user_cart.cart_items.all()
                     same_products = []
@@ -139,6 +149,7 @@ class CartAttachmentMutation(graphene.Mutation):
                         same_product[0].quantity = same_product[1]
                         cart_it.append(same_product[0])
                     CartItem.objects.bulk_update(cart_it, ['quantity'])
+                    cart.delete()
                     return CartAttachmentMutation(cart=user_cart)
                 except Cart.DoesNotExist:
                     raise GraphQLError("Cart Doesn't exist")
