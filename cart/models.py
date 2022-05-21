@@ -21,6 +21,8 @@ class Cart(models.Model):
                                         related_name='cart_billing_address',
                                         null=True,
                                         blank=True)
+    coupon_applied = models.BooleanField(default=False)
+    grand_total = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     def __str__(self):
         return f'{self.id}'
@@ -30,6 +32,11 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="cart_items")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    total = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     def __str__(self):
         return f'Cart Item {self.id}'
+
+    def save(self, *args, **kwargs):
+        self.total = self.product.price * self.quantity
+        super(CartItem, self).save(*args, **kwargs)

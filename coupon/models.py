@@ -1,11 +1,21 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from customers.models import User
+from django.utils import timezone
+from django.conf import settings
 
 
 class Coupon(models.Model):
-    code = models.CharField(max_length=30)
+    code = models.CharField(max_length=30, unique=True)
     activated_date = models.DateField()
     expiry_date = models.DateField()
-    is_active = models.BooleanField(default=True)
+    max_discount_price = models.DecimalField(max_digits=6, decimal_places=2)
+    price_boundary = models.PositiveIntegerField(null=True, blank=True)
+    percentage = models.PositiveIntegerField(validators=[
+        MaxValueValidator(100),
+        MinValueValidator(1)
+    ])
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.code
