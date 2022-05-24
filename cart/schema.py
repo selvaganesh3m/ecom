@@ -26,23 +26,25 @@ class CartQuery(object):
             carts = Cart.objects.filter(id=id)
             try:
                 cart = carts.first()
-                if not cart.coupon_applied:
-                    cart.grand_total = calculate_grand_total(cart)
-                    cart.save()
+                if cart:
+                    if not cart.coupon_applied:
+                        cart.grand_total = calculate_grand_total(cart)
+                        cart.save()
                 return carts
             except Cart.DoesNotExist:
-                return None
+                return []
 
         if user.is_authenticated:
             carts = Cart.objects.filter(user=user)
             try:
                 cart = carts.first()
-                if not cart.coupon_applied:
-                    cart.grand_total = calculate_grand_total(cart)
-                    cart.save()
+                if cart:
+                    if not cart.coupon_applied:
+                        cart.grand_total = calculate_grand_total(cart)
+                        cart.save()
                 return carts
             except Cart.DoesNotExist:
-                return None
+                return []
 
 
 

@@ -1,6 +1,5 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from customers.models import User
 from django.utils import timezone
 from django.conf import settings
 
@@ -15,7 +14,14 @@ class Coupon(models.Model):
         MaxValueValidator(100),
         MinValueValidator(1)
     ])
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.code
+
+
+class CouponUser(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user.email} -> {self.coupon.code}'

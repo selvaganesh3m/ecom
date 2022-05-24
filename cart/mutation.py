@@ -7,6 +7,7 @@ from .schema import CartType
 from .models import Cart, CartItem
 from products.models import Product
 from .utils import calculate_grand_total
+from decimal import Decimal
 
 
 
@@ -86,8 +87,9 @@ class RemoveFromCartMutation(graphene.Mutation):
                     except CartItem.DoesNotExist:
                         raise GraphQLError("Product is not in the cart")
                     cart_item.delete()
-                    cart.grand_total = calculate_grand_total(cart)
+                    cart.grand_total = Decimal(calculate_grand_total(cart))
                     cart.coupon_applied = False
+                    cart.coupon = None
                     cart.save()
                     return RemoveFromCartMutation(cart=cart)
                 except Product.DoesNotExist:
