@@ -6,7 +6,7 @@ from cart.schema import CartType
 from django.utils import timezone
 
 from cart.utils import calculate_grand_total
-from coupon.models import Coupon
+from coupon.models import Coupon, CouponUser
 import decimal
 
 
@@ -21,6 +21,8 @@ class ApplyCoupon(graphene.Mutation):
         if user.is_authenticated:
             try:
                 coupon = Coupon.objects.get(code__exact=coupon)
+                if CouponUser.objects.filter(user=user, coupon=coupon).exists():
+                    raise GraphQLError('Coupon Already Used by the User.')
                 if coupon.expiry_date < timezone.now().date():
                     raise GraphQLError('Coupon Expired.')
                 if coupon.activated_date > timezone.now().date():
@@ -37,6 +39,7 @@ class ApplyCoupon(graphene.Mutation):
                         else:
                             cart.grand_total -= decimal.Decimal(discount_calc_value)
                         cart.coupon_applied = True
+                        cart.coupon = coupon
                         cart.save()
                     return ApplyCoupon(cart=cart)
                 except Cart.DoesNotExist:
@@ -54,6 +57,7 @@ class RemoveCoupon(graphene.Mutation):
             try:
                 cart = Cart.objects.get(user=user)
                 cart.coupon_applied = False
+                cart.coupon = None
                 cart.grand_total = calculate_grand_total(cart)
                 cart.save()
                 return RemoveCoupon(cart=cart)

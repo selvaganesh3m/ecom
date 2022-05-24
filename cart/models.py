@@ -2,6 +2,7 @@ from django.db import models
 from customers.models import User, UserAddress
 from products.models import Product
 from django.conf import settings
+from coupon.models import Coupon
 
 
 # 2 Models
@@ -22,6 +23,7 @@ class Cart(models.Model):
                                         null=True,
                                         blank=True)
     coupon_applied = models.BooleanField(default=False)
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE,null=True, blank=True)
     grand_total = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     def __str__(self):

@@ -14,6 +14,7 @@ from django.conf import settings
 # def generate_jti():
 #     return binascii.hexlify(os.urandom(32)).decode()
 from customers.utils import generate_jti
+from coupon.models import Coupon
 
 
 class CustomUserManager(BaseUserManager):
