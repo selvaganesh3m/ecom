@@ -10,6 +10,8 @@ from payment.schema import PaymentType
 from .models import Order, OrderItem
 from payment.models import Payment
 from coupon.models import CouponUser
+from django.utils import timezone
+from datetime import timedelta
 
 client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
@@ -25,8 +27,14 @@ class CreateOrderMutation(graphene.Mutation):
                 cart = Cart.objects.get(user=user)
                 cart_items = cart.cart_items.all()
                 if cart.coupon:
-                    if CouponUser.objects.filter(user=user, coupon=cart.coupon).exists():
+                    coupon = cart.coupon
+                    if CouponUser.objects.filter(user=user, coupon=coupon).exists():
                         raise GraphQLError('Coupon Already Used by the User.')
+                    limited_coupon_count = CouponUser.objects.filter(coupon=coupon).count()
+                    if coupon.coupon_type == 'LCO':
+                        if limited_coupon_count == coupon.coupon_count:
+                            coupon.expiry_date = timezone.now().date() - timedelta(days=1)
+                            coupon.save()
                 order = Order.objects.create(
                     user=user,
                     shipping_address=cart.shipping_address,

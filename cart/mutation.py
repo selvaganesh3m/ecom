@@ -1,14 +1,12 @@
 import graphene
 from graphql import GraphQLError
 
-from customers.models import UserAddress, User
-from customers.schema import UserAddressType
+from customers.models import UserAddress
 from .schema import CartType
 from .models import Cart, CartItem
 from products.models import Product
 from .utils import calculate_grand_total
 from decimal import Decimal
-
 
 
 class AddToCartMutation(graphene.Mutation):

@@ -27,7 +27,7 @@ class CartQuery(object):
             try:
                 cart = carts.first()
                 if cart:
-                    if not cart.coupon_applied:
+                    if not cart.coupon:
                         cart.grand_total = calculate_grand_total(cart)
                         cart.save()
                 return carts
@@ -39,7 +39,7 @@ class CartQuery(object):
             try:
                 cart = carts.first()
                 if cart:
-                    if not cart.coupon_applied:
+                    if not cart.coupon:
                         cart.grand_total = calculate_grand_total(cart)
                         cart.save()
                 return carts
