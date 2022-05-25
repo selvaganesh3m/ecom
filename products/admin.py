@@ -4,8 +4,9 @@ from .models import Category, Product, ProductImage
 admin.site.register(ProductImage)
 
 
-class ProductInline(admin.TabularInline):
+class ProductInline(admin.StackedInline):
     model = Product
+    extra = 0
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -14,8 +15,9 @@ class CategoryAdmin(admin.ModelAdmin):
     ]
 
 
-class ProductImageInline(admin.TabularInline):
+class ProductImageInline(admin.StackedInline):
     model = ProductImage
+    extra = 0
 
 
 class ProductAdmin(admin.ModelAdmin):
